@@ -1,0 +1,34 @@
+# INSTRUCCIONES PARA SUBIR A GITHUB
+
+## Opción 1: Con Token Personal (Recomendado)
+
+1. Crea un token en: https://github.com/settings/tokens
+2. Click "Generate new token (classic)"
+3. Selecciona: repo + workflow
+4. Copia el token
+5. Ejecuta:
+
+git remote set-url origin https://TU_TOKEN_AQUI@github.com/arcenaltonto-creator/IISIAS93DJAN3DF32R.git
+git push -u origin main
+
+Reemplaza TU_TOKEN_AQUI con tu token real.
+
+## Opción 2: Con GitHub Desktop (Más Fácil)
+
+1. Descarga GitHub Desktop: https://desktop.github.com/
+2. Login con tu cuenta: arcenaltonto-creator
+3. File → Add Local Repository
+4. Selecciona: C:\Users\Maria\Documents\REMAKE ANYDESK PANEL WEB\REMAKE ANYDESK PANEL WEB\REMAKE ANYDESK PANEL WEB\REMAKE ANYDESK PANEL WEB
+5. Click "Publish repository"
+
+## Opción 3: Con Git Credential Manager
+
+1. Descarga: https://github.com/git-ecosystem/git-credential-manager/releases
+2. Instala
+3. Ejecuta: git push -u origin main
+4. Se abrirá ventana de autenticación automática
+
+---
+
+Una vez subido, el repositorio estará en:
+https://github.com/arcenaltonto-creator/IISIAS93DJAN3DF32R
