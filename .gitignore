@@ -1,28 +1,115 @@
-# Dependencies
+# Node modules
 node_modules/
-__pycache__/
-*.pyc
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
 
-# Build outputs
-dist/
-*.exe
+# Environment variables
+.env
+.env.local
+.env.production
 
-# Data & Database
-data/
+# Database files (contiene datos sensibles)
+server/data/panel.db
+server/data/panel.db-journal
 *.db
 *.db-journal
+*.sqlite
+*.sqlite3
 
-# Config & Secrets
-.device-id
-.env
+# Screenshots (pueden ser sensibles)
+server/data/screenshots/*.jpg
+server/data/screenshots/*.png
+server/data/screenshots/*.jpeg
 
-# OS
-.DS_Store
-Thumbs.db
-desktop.ini
+# Keep the screenshots directory but ignore content
+!server/data/screenshots/.gitkeep
+
+# Device ID files (únicos por instalación)
+agent/.device-id
+**/.device-id
+
+# Compiled executables (muy grandes)
+agent/defender-agent.exe
+agent/dist/
+DEFENDER-Agent-Distributable/defender-agent.exe
+LunarX-C2-v2.1-FINAL/defender-agent.exe
+*.exe
+
+# Build artifacts
+build/
+dist/
+out/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
 # IDE
 .vscode/
 .idea/
 *.swp
 *.swo
+*~
+.DS_Store
+
+# OS
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Backup files
+*.bak
+*.backup
+
+# Agent test files
+agent/test_write.txt
+
+# PowerShell scripts (pueden contener rutas locales)
+*.ps1
+
+# Certificates y claves (nunca subir)
+*.pem
+*.key
+*.cert
+*.crt
+*.p12
+*.pfx
+
+# Config con datos sensibles
+config.local.json
+config.production.json
+
+# Python (si usas scripts auxiliares)
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+venv/
+ENV/
+
+# Rust (si compilas módulos nativos)
+target/
+Cargo.lock
+
+# Archives
+*.zip
+*.rar
+*.7z
+*.tar
+*.gz
+
+# Keep important empty directories
+!agent/dist/.gitkeep
+!server/data/.gitkeep
+!server/data/screenshots/.gitkeep
